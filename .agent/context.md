@@ -51,9 +51,20 @@ stale instruction.
 
 ## Security
 
-- Never print, copy, commit, or summarize secret values.
-- Never expose `.env*`, tokens, private keys, credentials, or customer data.
-- Mention env variable names only when needed; never reveal values.
+Mandatory checks before any commit:
+- [ ] No hardcoded secrets, API keys, passwords, or tokens in source
+- [ ] All user inputs validated at system boundaries
+- [ ] SQL / NoSQL queries use parameterized form — no string concatenation
+- [ ] HTML output is sanitized — no raw user content injected into the DOM
+- [ ] Auth and authorization checks are present on every relevant endpoint
+- [ ] Error messages do not leak stack traces, internal paths, or secret values
+- [ ] `.env*`, private keys, credentials, and customer data are never committed
+
+Additional project-specific constraints:
+- <e.g. rate limiting required on public endpoints>
+- <e.g. PII must not be logged>
+
+Never print, copy, commit, or summarize secret values. Mention env variable names only when needed; never reveal values.
 
 ## Glossary
 

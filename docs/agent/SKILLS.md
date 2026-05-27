@@ -12,10 +12,15 @@ on demand — not part of the always-on startup context.
   `scripts/check-skills-sync.sh` runs in pre-commit and fails the commit on
   drift.
 
-## Bundled skill
+## Bundled skills
 
 - `cross-model-review` — two-model plan review loop; read before drafting any
   non-trivial plan when two capable models are available.
+- `codebase-onboarding` — four-phase recon and mapping protocol; run when
+  joining a new repo to populate `.agent/context.md` and produce an onboarding
+  summary.
+- `verification-loop` — structured build → type → lint → test → secret-scan →
+  diff pass; run before claiming work done or opening a PR.
 
 ## Adding your own skills
 
