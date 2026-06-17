@@ -1,8 +1,9 @@
-# State — <YYYY-MM-DD> — agent system installed
+# State — 2026-06-17 — README install instructions clarified
 
 ## Current focus
 
-Agent system just installed via `agent-system-starter`. No task in progress.
+Clarified README instructions for running `init.sh` from the starter repo
+against a separate target repo.
 
 **Active plan:** none — see `plans/active.md`.
 
@@ -12,10 +13,11 @@ Status: idle
 
 ## Tests
 
-Tests run: none.
+Tests run: README readback and `git diff -- README.md`.
 
 Tests not run: none.
 
 ## Next likely step
 
-Fill in `.agent/context.md`, then await the first task.
+Status is idle. Fill in `.agent/context.md` when adopting this starter for a
+real project.

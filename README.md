@@ -41,10 +41,19 @@ npx degit Ganzorig2022agent-system-starter my-new-project
 
 ### Existing project — run the init script
 
+Clone this starter repo somewhere, then run its installer against the project
+repo you want to adopt the convention in:
+
 ```bash
-git clone https://github.com/Ganzorig2022agent-system-starter
-./agent-system-starter/init.sh /path/to/your-project
+git clone https://github.com/Ganzorig2022/agent-system-starter.git
+cd agent-system-starter
+./init.sh /path/to/your-existing-project
 ```
+
+`init.sh` is run from the starter repo, but the path argument must point to your
+target repo. Running `./init.sh` with no argument inside `agent-system-starter`
+is intentionally rejected, because the starter repo is the source template.
+
 `init.sh` never overwrites an existing file — it adds what is missing, reports
 what it skipped, and is safe to re-run.
 
