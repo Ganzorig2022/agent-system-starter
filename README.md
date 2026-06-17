@@ -36,16 +36,15 @@ scripts/
 Click **"Use this template"** on GitHub, or:
 
 ```bash
-npx degit <your-user>/agent-system-starter my-new-project
+npx degit Ganzorig2022agent-system-starter my-new-project
 ```
 
 ### Existing project — run the init script
 
 ```bash
-git clone https://github.com/<your-user>/agent-system-starter
+git clone https://github.com/Ganzorig2022agent-system-starter
 ./agent-system-starter/init.sh /path/to/your-project
 ```
-
 `init.sh` never overwrites an existing file — it adds what is missing, reports
 what it skipped, and is safe to re-run.
 
