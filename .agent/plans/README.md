@@ -2,10 +2,10 @@
 
 ## Why
 
-Plans were drafted in machine-local files (`~/.claude/plans/<slug>.md`) and
-handed to the worker by copy-paste. A fresh session on another device could
-not recover the approved plan. This directory puts the plan in Git so every
-agent refers to the same artifact.
+Plans are often drafted in machine-local files or chat context and handed to a
+worker by copy-paste. A fresh session on another device cannot recover that
+approved plan. This directory puts the plan in Git so every agent refers to the
+same artifact.
 
 This file describes the **plan lifecycle only**. Session startup is defined in
 `../README.md` and nowhere else — do not restate it here.
@@ -21,10 +21,12 @@ Only **one** plan is active at a time.
 
 ## Roles
 
-- **Planner** (e.g. Claude) drafts and updates `active.md`, and sets
-  `Status: approved` when the plan is final and the human has authorized it.
-- **Worker** (e.g. Codex) executes — and executes **only** `active.md`, and
-  only when its `Status` is `approved` or `in-progress`.
+- **Planner** drafts and updates `active.md`, and sets `Status: approved` when
+  the plan is final and the human has authorized it.
+- **Worker** executes — and executes **only** `active.md`, and only when its
+  `Status` is `approved` or `in-progress`.
+- **Reviewer** checks plans or code when the change is risky, cross-cutting, or
+  meaningful enough to benefit from a second pass.
 
 The repo owns the handoff: the planner writes the plan, the worker reads it.
 No copy-paste middleman for routine work. External review (e.g. another model)

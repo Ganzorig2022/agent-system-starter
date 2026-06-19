@@ -6,11 +6,14 @@ on demand — not part of the always-on startup context.
 ## Agent Skills Pack
 
 - **Canonical source: `docs/agent/skills/<name>/`.** Edit skills here, then run
-  `scripts/sync-skills.sh`.
-- **Mirrors (do NOT edit directly):** `.codex/skills/`, `.agents/skills/`,
-  `.opencode/skills/`. They are rewritten from canonical by the sync script;
-  `scripts/check-skills-sync.sh` runs in pre-commit and fails the commit on
-  drift.
+  `scripts/sync-skills.sh` if you need hidden harness mirrors.
+- **Optional mirrors (do NOT edit directly):** `.codex/skills/`,
+  `.agents/skills/`, `.opencode/skills/`. They are compatibility outputs for
+  harnesses that only load repo-local skills from their own hidden directory.
+  They are rewritten from canonical by the sync script.
+- **Global skills:** user-level skills such as `~/.codex/skills/` are reusable
+  across repos. Prefer the repo-local canonical skill when both a repo skill and
+  a global skill apply to the same workflow.
 
 ## Bundled skills
 
@@ -26,8 +29,9 @@ on demand — not part of the always-on startup context.
 
 1. Create `docs/agent/skills/<name>/SKILL.md` with YAML frontmatter
    (`name`, `description`) followed by the skill body.
-2. Run `scripts/sync-skills.sh` to mirror it into every harness dir.
-3. Commit the canonical file **and** the regenerated mirrors together.
+2. Run `scripts/sync-skills.sh` if the repo uses hidden harness mirrors.
+3. Commit the canonical file. If mirrors are committed in this repo, commit the
+   regenerated mirrors in the same change.
 
 Keep stack-specific skills (React, a given cloud, a given framework) here too —
 they travel with the repo that needs them.

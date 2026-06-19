@@ -5,6 +5,11 @@ same deterministic startup, memory, and planner→worker handoff — in any proj
 on any device, across any session. No MCP, no servers, no automation framework.
 Just markdown that lives in Git.
 
+It also fits a split customization model: repo state and work orders live in
+`.agent/`, while global harness customization can live in places such as
+`~/.codex/skills`, `~/.codex/rules`, `~/.codex/commands`, and
+`~/.codex/agents`.
+
 ## What you get
 
 ```
@@ -25,9 +30,14 @@ docs/agent/
   SKILLS.md          # how the skill pack works
   skills/            # canonical skills (cross-model-review bundled)
 scripts/
-  sync-skills.sh        # mirror canonical skills into each harness dir
-  check-skills-sync.sh  # pre-commit guard against skill drift
+  sync-skills.sh        # optional: mirror canonical skills into harness dirs
+  check-skills-sync.sh  # guard against drift in mirrors that exist
 ```
+
+Optional compatibility mirrors can be generated under `.codex/skills/`,
+`.agents/skills/`, and `.opencode/skills/` for harnesses that only discover
+repo-local skills from their own hidden directory. They are not required for a
+clean checkout.
 
 ## How to adopt it
 
@@ -61,8 +71,9 @@ what it skipped, and is safe to re-run.
 
 1. Fill in `.agent/context.md` — architecture, conventions, gotchas, glossary.
 2. Set today's date in `.agent/state.md`.
-3. Run `scripts/sync-skills.sh` to mirror skills into the harness dirs.
-4. Wire `scripts/check-skills-sync.sh` into your pre-commit hook.
+3. If your harness needs repo-local skill mirrors, run
+   `scripts/sync-skills.sh`.
+4. Optionally wire `scripts/check-skills-sync.sh` into your pre-commit hook.
 5. Commit everything — the convention only works when it is in Git.
 
 ## What's portable vs. project-specific
@@ -70,6 +81,9 @@ what it skipped, and is safe to re-run.
 - **Portable (shipped here):** the `.agent/` structure, the startup protocol,
   the plan lifecycle, the pointer files, the skill mechanism, and the generic
   `cross-model-review` skill.
+- **Global / user-level (not shipped here):** Codex or other harness content
+  such as `~/.codex/rules`, `~/.codex/commands`, `~/.codex/agents`, and
+  reusable global skills. Use those as customization layers, not repo state.
 - **Project-specific (you write):** `context.md`, `state.md`, your own
   `decisions/`, and any stack-specific skills under `docs/agent/skills/`.
 

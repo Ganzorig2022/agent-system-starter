@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# Verify each harness skill dir is byte-identical to the canonical source.
-# Exit non-zero with diff output if drift is detected.
+# Verify enabled harness skill dirs are byte-identical to the canonical source.
+# Missing target roots are treated as disabled compatibility mirrors.
+# Exit non-zero with diff output if drift is detected in an enabled mirror.
+#
+# Override targets with:
+#   AGENT_SKILL_TARGETS=".codex/skills .agents/skills" scripts/check-skills-sync.sh
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CANONICAL="$ROOT/docs/agent/skills"
-TARGETS=(".codex/skills" ".agents/skills" ".opencode/skills")
+read -r -a TARGETS <<< "${AGENT_SKILL_TARGETS:-.codex/skills .agents/skills .opencode/skills}"
 
 if [ ! -d "$CANONICAL" ]; then
   # No canonical source yet — nothing to check.
@@ -17,6 +21,9 @@ shopt -s nullglob
 for skill_path in "$CANONICAL"/*/; do
   name="$(basename "$skill_path")"
   for target in "${TARGETS[@]}"; do
+    if [ ! -d "$ROOT/$target" ]; then
+      continue
+    fi
     dest="$ROOT/$target/$name"
     if [ ! -d "$dest" ]; then
       echo "MISSING: $target/$name"

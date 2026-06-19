@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# Sync canonical skills from docs/agent/skills/ to each harness skill dir.
+# Sync canonical skills from docs/agent/skills/ to harness skill dirs.
 # Canonical wins; mirrors are fully overwritten (including deletions).
+#
+# Override targets with:
+#   AGENT_SKILL_TARGETS=".codex/skills .agents/skills" scripts/sync-skills.sh
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CANONICAL="$ROOT/docs/agent/skills"
-TARGETS=(".codex/skills" ".agents/skills" ".opencode/skills")
+read -r -a TARGETS <<< "${AGENT_SKILL_TARGETS:-.codex/skills .agents/skills .opencode/skills}"
 
 if [ ! -d "$CANONICAL" ]; then
   echo "error: canonical skills dir missing at $CANONICAL" >&2

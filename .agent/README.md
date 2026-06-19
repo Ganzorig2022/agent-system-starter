@@ -2,7 +2,10 @@
 
 ## Why
 
-New agent sessions and new machines lose context. This directory is the durable handoff.
+New agent sessions and new machines lose context. This directory is the
+durable handoff. Harness-specific customization can live outside the repo, for
+example in `~/.codex/skills`, `~/.codex/rules`, `~/.codex/commands`, or
+`~/.codex/agents`, but those layers do not replace this repo-local protocol.
 
 ## Files
 
@@ -24,7 +27,11 @@ This is the single source of truth for the startup sequence. `CLAUDE.md` and
 2. Run `git status --short` and `git log --oneline -10`. Trust Git over `state.md` if they disagree.
 3. If `state.md` looks stale relative to Git, say so out loud and ask before continuing.
 4. If `state.md` references a handoff (`see handoffs/<file>`), read that one file.
-5. Restate task, assumptions, files likely to change, and validation plan. Then code.
+5. Load the narrowest directly relevant harness customization, if any: first a
+   skill for a workflow, then a rule for a compact constraint, then a command
+   template, then a specialist prompt. Prefer repo-managed content over global
+   content when both apply.
+6. Restate task, assumptions, files likely to change, and validation plan. Then code.
 
 `decisions/` is not auto-loaded. Consult the relevant `decisions/NN-*.md` only
 when touching a boundary it governs.
